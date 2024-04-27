@@ -35,10 +35,14 @@ const userController = {
       //   save the user
       const savedUser = await newUser.save();
 
+      const userRegistered = await User.findOne({ username }).select(
+        "-_id -__v -passwordHash"
+      );
+
       //   return a success message with the user saved
       response
         .status(201)
-        .json({ message: "User created successfully", user: savedUser });
+        .json({ message: "User created successfully", user: userRegistered });
     } catch (error) {
       response.status(500).json({ message: error.message });
     }
