@@ -4,6 +4,10 @@ const User = require("../models/user");
 // import the bcrypt package
 const bcrypt = require("bcrypt");
 
+const sendEmail = require("../utils/email");
+
+const crypto = require("crypto");
+
 // import jwt
 const jwt = require("jsonwebtoken");
 
@@ -187,6 +191,82 @@ const userController = {
 
       // return a success message
       response.status(200).json({ message: "logout successful" });
+    } catch (error) {
+      response.status(500).json({ message: error.message });
+    }
+  },
+  forgetPassword: async (request, response) => {
+    const { username } = request.body;
+
+    const user = await User.findOne({ username });
+
+    if (!user) {
+      return response.status(400).json({ message: "User not found" });
+    }
+
+    const resetToken = user.createResetPasswordToken();
+
+    await user.save();
+
+    // create a reset url
+    const resetUrl = `${request.protocol}://${request.get(
+      "host"
+    )}/api/users/resetPassword/${resetToken}`;
+
+    const message = `We have received a password reset request. Please use the link below to reset your password.\n\n${resetUrl}\n\nThis password link will be valid only for 10 minutes.\n\nIf you havn't initiated the request, please ignore the link.`;
+
+    // we need to send the reset token to the user
+
+    try {
+      await sendEmail({
+        email: user.username,
+        subject: `Password change request received`,
+        message: message,
+      });
+      response.json({
+        status: "success",
+        message: "Password reset link sent to the user email",
+      });
+    } catch (error) {
+      (user.passwordResetToken = undefined),
+        (user.passwordResetExpires = undefined);
+      await user.save();
+      console.log(error);
+      response.status(500).json({
+        message:
+          "There was an error sending password reset email. Please try again later",
+      });
+    }
+  },
+  resetPassword: async (request, response) => {
+    try {
+      const { resetToken } = request.params;
+
+      const passwordResetToken = crypto
+        .createHash("sha256")
+        .update(resetToken)
+        .digest("hex");
+
+      const user = await User.findOne({
+        passwordResetToken: passwordResetToken,
+        passwordResetTokenExpires: { $gt: Date.now() },
+      });
+
+      if (!user) {
+        return response
+          .status(400)
+          .json({ message: "Invalid Token or has expired" });
+      }
+
+      const passwordHash = await bcrypt.hash(request.body.password, 10);
+
+      user.passwordHash = passwordHash;
+      user.passwordResetToken = undefined;
+      user.passwordResetTokenExpires = undefined;
+      user.passwordChangedAt = Date.now();
+      await user.save();
+
+      response.json({ message: "Password changed successfully!" });
     } catch (error) {
       response.status(500).json({ message: error.message });
     }
