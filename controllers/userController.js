@@ -95,7 +95,9 @@ const userController = {
         expires: new Date(Date.now() + 24 * 60 * 60 * 1000), // 24 hours expiration
       });
 
-      response.status(200).json({ message: "login successfull", token });
+      response
+        .status(200)
+        .json({ message: "login successfull", name: user.name, token });
     } catch (error) {
       response.status(500).json({ message: error.message });
     }
