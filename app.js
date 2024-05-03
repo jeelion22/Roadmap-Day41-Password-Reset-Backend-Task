@@ -17,7 +17,7 @@ const cookieParser = require("cookie-parser");
 const morgan = require("morgan");
 
 // user cors middleware
-app.use(cors({ origin: "*", credentials: true }));
+app.use(cors({ origin: "http://localhost:5173", credentials: true }));
 
 // use the cookie-parser middleware
 app.use(cookieParser());
