@@ -20,7 +20,7 @@ const morgan = require("morgan");
 app.use(
   cors({
     origin: [
-      "https://main--user-mangement-react-app.netlify.app/",
+      "https://main--user-mangement-react-app.netlify.app",
       "http://localhost:5173",
       "http://localhost:5174",
     ],
