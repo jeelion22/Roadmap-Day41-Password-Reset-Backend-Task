@@ -19,12 +19,8 @@ const morgan = require("morgan");
 // user cors middleware
 app.use(
   cors({
-    origin: [
-      "https://main--user-mangement-react-app.netlify.app",
-      // "http://localhost:5173",
-      // "http://localhost:5174",
-    ],
-    methods: ["GET", "POST", "PUT"],
+    origin: ["https://main--user-mangement-react-app.netlify.app"],
+
     credentials: true,
   })
 );
