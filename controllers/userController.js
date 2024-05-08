@@ -189,10 +189,10 @@ const userController = {
   logout: async (request, response) => {
     try {
       response.clearCookie("token", {
-        // path: "/",
-        // secure: true,
-        // sameSite: "None",
-        // domain: "roadmap-day41-password-reset-backend-task.onrender.com",
+        path: "/",
+        secure: true,
+        sameSite: "None",
+        domain: "roadmap-day41-password-reset-backend-task.onrender.com",
       });
 
       // return a success message
