@@ -192,7 +192,7 @@ const userController = {
         path: "/",
         secure: true,
         sameSite: "None",
-        domain: "roadmap-day41-password-reset-backend-task.onrender.com",
+        domain: "roadmap-day41-password-reset-backend-task.onrender.com/",
       });
 
       // return a success message

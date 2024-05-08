@@ -16,7 +16,7 @@ userRouter.post("/login", userController.login);
 userRouter.get("/me", auth.isAuth, userController.me);
 userRouter.put("/me", auth.isAuth, userController.update);
 userRouter.delete("/me", auth.isAuth, userController.delete);
-userRouter.get("/logout", auth.isAuth, userController.logout);
+userRouter.post("/logout", auth.isAuth, userController.logout);
 userRouter.post("/forgetPassword", userController.forgetPassword);
 userRouter.put(
   "/resetPassword/:resetToken",
