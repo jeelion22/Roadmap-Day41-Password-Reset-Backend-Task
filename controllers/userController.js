@@ -92,7 +92,6 @@ const userController = {
         httpOnly: true,
         secure: true,
         sameSite: "none",
-        domain: ".user-mangement-react-app.netlify.app",
 
         expires: new Date(Date.now() + 24 * 60 * 60 * 1000), // 24 hours expiration
       });
@@ -194,7 +193,7 @@ const userController = {
         secure: true,
         sameSite: "none",
         path: "/",
-        domain: ".user-mangement-react-app.netlify.app",
+        domain: "user-mangement-react-app.netlify.app",
       });
 
       // return a success message
