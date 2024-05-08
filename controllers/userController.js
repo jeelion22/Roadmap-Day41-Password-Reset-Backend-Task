@@ -192,7 +192,7 @@ const userController = {
         httpOnly: true,
         secure: true,
         sameSite: "none",
-
+        path: "/",
         domain: "user-mangement-react-app.netlify.app",
       });
 
