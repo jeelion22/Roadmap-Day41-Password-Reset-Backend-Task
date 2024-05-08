@@ -172,7 +172,7 @@ const userController = {
       const userId = request.userId;
 
       // delete the user from the database
-      const deletedUser = await User.findByIdAndDelete({ userId });
+      const deletedUser = await User.findByIdAndDelete(userId);
 
       if (!deletedUser) {
         return response.status(400).json({ message: "User not found" });
