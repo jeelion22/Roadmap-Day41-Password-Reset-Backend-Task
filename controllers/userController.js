@@ -92,6 +92,7 @@ const userController = {
         httpOnly: true,
         secure: true,
         sameSite: "none",
+        domain: "user-mangement-react-app.netlify.app",
 
         expires: new Date(Date.now() + 24 * 60 * 60 * 1000), // 24 hours expiration
       });
@@ -188,7 +189,13 @@ const userController = {
   // logout the user
   logout: async (request, response) => {
     try {
-      response.clearCookie("token");
+      response.clearCookie("token", {
+        httpOnly: true,
+        secure: true,
+        sameSite: "none",
+        path: "/",
+        domain: "user-mangement-react-app.netlify.app",
+      });
 
       // return a success message
       response.status(200).json({ message: "logout successful" });
