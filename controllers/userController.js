@@ -92,6 +92,7 @@ const userController = {
         httpOnly: true,
         secure: true,
         sameSite: "none",
+        path: "/",
         expires: new Date(Date.now() + 24 * 60 * 60 * 1000), // 24 hours expiration
       });
 
@@ -187,7 +188,12 @@ const userController = {
   // logout the user
   logout: async (request, response) => {
     try {
-      response.clearCookie("token");
+      response.clearCookie("token", {
+        path: "/",
+        secure: true,
+        sameSite: "None",
+        domain: "roadmap-day41-password-reset-backend-task.onrender.com",
+      });
 
       // return a success message
       response.status(200).json({ message: "logout successful" });
