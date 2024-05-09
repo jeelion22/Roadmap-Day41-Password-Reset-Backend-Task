@@ -19,11 +19,23 @@ const morgan = require("morgan");
 // user cors middleware
 app.use(
   cors({
-    origin: ["https://user-mangement-react-app.netlify.app"],
+    origin: "https://user-mangement-react-app.netlify.app",
 
     credentials: true,
   })
 );
+
+app.use((req, res, next) => {
+  req.header(
+    "Access-Control-Allow-Origin",
+    "https://user-mangement-react-app.netlify.app"
+  );
+  res.head(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept"
+  );
+  next();
+});
 
 // use the cookie-parser middleware
 app.use(cookieParser());
