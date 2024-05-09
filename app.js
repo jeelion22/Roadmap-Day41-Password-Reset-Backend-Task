@@ -30,7 +30,7 @@ app.use((req, res, next) => {
     "Access-Control-Allow-Origin",
     "https://user-mangement-react-app.netlify.app"
   );
-  res.head(
+  res.header(
     "Access-Control-Allow-Headers",
     "Origin, X-Requested-With, Content-Type, Accept"
   );
