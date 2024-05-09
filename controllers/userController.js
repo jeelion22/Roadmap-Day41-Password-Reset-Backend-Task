@@ -188,13 +188,16 @@ const userController = {
   // logout the user
   logout: async (request, response) => {
     try {
-      response.clearCookie("token", {
-        httpOnly: true,
-        secure: true,
-        sameSite: "none",
-        path: "/",
-        domain: "user-mangement-react-app.netlify.app",
-      });
+      response.clearCookie(
+        "token"
+        //  {
+        //   httpOnly: true,
+        //   secure: true,
+        //   sameSite: "none",
+        //   path: "/",
+        //   domain: "user-mangement-react-app.netlify.app",
+        // }
+      );
 
       // return a success message
       response.status(200).json({ message: "logout successful" });
